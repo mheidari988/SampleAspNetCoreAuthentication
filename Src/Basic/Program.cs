@@ -3,6 +3,11 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(cnfg =>
+{
+    cnfg.AddConsole()
+        .AddDebug();
+});
 builder.Services.AddControllersWithViews(cnfg =>
     {
         cnfg.Filters.Add(new AuthorizeFilter());
