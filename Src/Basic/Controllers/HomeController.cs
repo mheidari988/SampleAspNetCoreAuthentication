@@ -13,6 +13,7 @@ namespace Basic.Controllers
             return View();
         }
 
+        [Authorize(Policy = "ClaimDateOfBirth")]
         public IActionResult Secret()
         {
             return View();
@@ -23,8 +24,9 @@ namespace Basic.Controllers
         {
             var cuteClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,"Mohi"),
-                new Claim(ClaimTypes.Email,"mohidev@outlook.com")
+                new Claim(ClaimTypes.Name, "Mohi"),
+                new Claim(ClaimTypes.Email, "mohidev@outlook.com"),
+                new Claim(ClaimTypes.DateOfBirth, new DateTime(1988,4,29).ToString())
             };
 
             var cuteIdentity = new ClaimsIdentity(cuteClaims, "Cute Identity");
