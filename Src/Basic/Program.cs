@@ -52,7 +52,7 @@ static void ConfigAuthorization(WebApplicationBuilder builder)
     {
         cnfg.DefaultPolicy = new AuthorizationPolicyBuilder()
             .RequireAuthenticatedUser()
-            .RequireClaim(ClaimTypes.DateOfBirth)
+            //.RequireClaim(ClaimTypes.DateOfBirth)
             .Build();
     });
 }
