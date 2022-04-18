@@ -19,6 +19,12 @@ namespace Basic.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminSecret()
+        {
+            throw new NotImplementedException();
+        }
+
         [AllowAnonymous]
         public IActionResult Authenticate()
         {
@@ -26,6 +32,7 @@ namespace Basic.Controllers
             {
                 new Claim(ClaimTypes.Name, "Mohi"),
                 new Claim(ClaimTypes.Email, "mohidev@outlook.com"),
+                new Claim(ClaimTypes.Role, "Admin"),
                 new Claim(ClaimTypes.DateOfBirth, new DateTime(1988,4,29).ToString())
             };
 
