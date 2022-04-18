@@ -48,11 +48,4 @@ static void ConfigAuthentication(WebApplicationBuilder builder)
 }
 static void ConfigAuthorization(WebApplicationBuilder builder)
 {
-    builder.Services.AddAuthorization(cnfg =>
-    {
-        cnfg.DefaultPolicy = new AuthorizationPolicyBuilder()
-            .RequireAuthenticatedUser()
-            .RequireClaim(ClaimTypes.DateOfBirth)
-            .Build();
-    });
 }
