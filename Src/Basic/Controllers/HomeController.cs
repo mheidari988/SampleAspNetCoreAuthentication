@@ -46,6 +46,11 @@ namespace Basic.Controllers
             return View();
         }
 
+        public IActionResult DoStuffInView()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Authenticate()
         {

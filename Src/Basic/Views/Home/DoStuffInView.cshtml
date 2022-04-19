@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService _authorizationService
+
+@if ((await _authorizationService.AuthorizeAsync(User, "ClaimDateOfBirth")).Succeeded)
+{
+    <h1>You have the exact access here, we checked your authorization inside our razor page</h1>
+}
