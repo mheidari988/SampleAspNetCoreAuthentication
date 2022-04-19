@@ -7,6 +7,12 @@ namespace Basic.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
+
+        public HomeController(IAuthorizationService authorizationService)
+        {
+            _authorizationService = authorizationService;
+        }
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -25,6 +31,21 @@ namespace Basic.Controllers
             throw new NotImplementedException();
         }
 
+        public async Task<IActionResult> DoStuff()
+        {
+            // do some stuff
+
+            var policy = new AuthorizationPolicyBuilder("DoStuffScheme")
+                .RequireClaim(ClaimTypes.UserData, "SomeData").Build();
+
+            var result = await _authorizationService.AuthorizeAsync(User, policy);
+            if (result.Succeeded)
+            {
+                ViewBag.SecretMessage = "You can see secret message because you have *SomeData*";
+            }
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Authenticate()
         {
@@ -33,7 +54,8 @@ namespace Basic.Controllers
                 new Claim(ClaimTypes.Name, "Mohi"),
                 new Claim(ClaimTypes.Email, "mohidev@outlook.com"),
                 new Claim(ClaimTypes.Role, "Admin"),
-                new Claim(ClaimTypes.DateOfBirth, new DateTime(1988,4,29).ToString())
+                new Claim(ClaimTypes.DateOfBirth, new DateTime(1988,4,29).ToString()),
+                new Claim(ClaimTypes.UserData, "SomeData")
             };
 
             var cuteIdentity = new ClaimsIdentity(cuteClaims, "Cute Identity");
