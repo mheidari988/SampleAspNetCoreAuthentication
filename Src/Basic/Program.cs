@@ -1,4 +1,3 @@
-using Basic.AuthorizationRequirements;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -6,7 +5,6 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigureScoped(builder);
 ConfigLogging(builder);
 ConfigControllersWithViews(builder);
 ConfigAuthentication(builder);
@@ -26,6 +24,7 @@ app.Run();
 static void ConfigureScoped(WebApplicationBuilder builder)
 {
     builder.Services.AddScoped<IAuthorizationHandler, CustomPolicyHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
 }
 static void ConfigLogging(WebApplicationBuilder builder)
 {
@@ -56,21 +55,9 @@ static void ConfigAuthorization(WebApplicationBuilder builder)
 {
     builder.Services.AddAuthorization(cnfg =>
     {
-        //cnfg.DefaultPolicy = new AuthorizationPolicyBuilder()
-        //    .RequireAuthenticatedUser()
-        //    .RequireClaim(ClaimTypes.DateOfBirth)
-        //    .Build();
-
-        //cnfg.AddPolicy("Claim.DateOfBirth", policyBuilder =>
-        //{
-        //    policyBuilder.RequireClaim(ClaimTypes.DateOfBirth);
-        //});
-
-        cnfg.AddPolicy("ClaimDateOfBirth", pBuilder =>
-        {
-            //This is an extention method
-            pBuilder.RequireAuthenticatedUser();
-            pBuilder.AddCustomPolicy(ClaimTypes.DateOfBirth);
-        });
+        cnfg.DefaultPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            //.RequireClaim(ClaimTypes.DateOfBirth)
+            .Build();
     });
 }
