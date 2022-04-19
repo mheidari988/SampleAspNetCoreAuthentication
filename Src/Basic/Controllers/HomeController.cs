@@ -51,6 +51,16 @@ namespace Basic.Controllers
             return View();
         }
 
+        public async Task<IActionResult> DoStuffInlineInject([FromServices] IAuthorizationService authorizationService)
+        {
+            if ((await authorizationService.AuthorizeAsync(User, "ClaimDateOfBirth")).Succeeded)
+            {
+                ViewBag.SecretMessage = "I'm authorized to use DoStuffInlineInject Action and here.";
+            }
+
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Authenticate()
         {
