@@ -70,7 +70,8 @@ namespace Basic.Controllers
                 new Claim(ClaimTypes.Email, "mohidev@outlook.com"),
                 new Claim(ClaimTypes.Role, "Admin"),
                 new Claim(ClaimTypes.DateOfBirth, new DateTime(1988,4,29).ToString()),
-                new Claim(ClaimTypes.UserData, "SomeData")
+                new Claim(ClaimTypes.UserData, "SomeData"),
+                new Claim("Friend", "Good Friend")
             };
 
             var cuteIdentity = new ClaimsIdentity(cuteClaims, "Cute Identity");
